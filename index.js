@@ -178,7 +178,7 @@ async function main() {
     core.endGroup();
 
 
-    let copyback = core.getBooleanInput("copyback");
+    let copyback = core.getBooleanInput("copyback") || true;
     if (copyback) {
       core.startGroup("Copy files back from the VM");
       let sync = core.getInput("sync");
