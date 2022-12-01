@@ -142,11 +142,16 @@ async function main() {
   await shell("bash run.sh onInitialized" );
   core.endGroup();
 
+  let usesh = core.getBooleanInput("usesh");
   core.startGroup("Run 'prepare' in VM");
   var prepare = core.getInput("prepare");
   if (prepare) {
     core.info("Running prepare: " + prepare);
-    await execSSH(prepare);
+    if (usesh) {
+      await execSSHSH(prepare);
+    } else {
+      await execSSH(prepare);
+    }
   }
 
   core.endGroup();
@@ -159,7 +164,6 @@ async function main() {
   var error = null;
   try {
     let cmd = "cd $GITHUB_WORKSPACE;\n" + run;
-    var usesh = core.getBooleanInput("usesh");
     if (usesh) {
       await execSSHSH(cmd);
     } else {
