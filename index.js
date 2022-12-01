@@ -158,7 +158,7 @@ async function main() {
 
   var error = null;
   try {
-    var usesh = core.getInput("usesh").toLowerCase() == "true";
+    var usesh = core.getBooleanInput("usesh");
     if (usesh) {
       await execSSHSH("cd $GITHUB_WORKSPACE;\n" + run);
     } else {
@@ -174,8 +174,8 @@ async function main() {
     core.endGroup();
 
 
-    let copyback = core.getInput("copyback");
-    if(copyback !== "false") {
+    let copyback = core.getBooleanInput("copyback");
+    if (copyback) {
       core.startGroup("Copy files back from the VM");
       let sync = core.getInput("sync");
       if (sync != "sshfs") {
@@ -184,7 +184,7 @@ async function main() {
       }
       core.endGroup();
     }
-    if(error) {
+    if (error) {
       core.setFailed(error.message);
       process.exit(1);
     } else {
