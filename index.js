@@ -158,13 +158,13 @@ async function main() {
 
   var error = null;
   try {
+    let cmd = "cd $GITHUB_WORKSPACE;\n" + run;
     var usesh = core.getBooleanInput("usesh");
     if (usesh) {
-      await execSSHSH("cd $GITHUB_WORKSPACE;\n" + run);
+      await execSSHSH(cmd);
     } else {
-      await execSSH("cd $GITHUB_WORKSPACE;\n" + run);
+      await execSSH(cmd);
     }
-
   } catch (err) {
     error = err;
     try {
